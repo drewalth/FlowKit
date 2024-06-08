@@ -5,7 +5,7 @@ import XCTest
 final class FlowKitTests: XCTestCase {
 
   // run test then visit https://waterdata.usgs.gov/monitoring-location/09359500/#parameterCode=00060&period=P7D&showMedian=false to see the source data
-  func testExample() async throws {
+  func test_usgs_single() async throws {
     let api = USGS.WaterServices()
 
     let results = try await api.fetchGaugeStationData(
@@ -23,7 +23,7 @@ final class FlowKitTests: XCTestCase {
     print(latestHeight!)
   }
 
-  func testMultipleSites() async throws {
+  func test_usgs_multiple() async throws {
     let api = USGS.WaterServices()
 
     let results = try await api.fetchGaugeStationData(
@@ -49,4 +49,50 @@ final class FlowKitTests: XCTestCase {
     print(site2LatestDischarge!)
     print(site2LatestHeight!)
   }
+
+  // https://dd.weather.gc.ca/hydrometric/csv/BC/hourly/
+  // then select a station, e.g. 07EA004
+  func test_environment_canada_single() async throws {
+    let api = EnvironmentCanada()
+
+    let results = try await api.fetchGaugeStationData(siteID: "07EA004", province: .bc)
+
+    XCTAssertFalse(results.isEmpty)
+
+    let latestDischarge = results.last { $0.unit == .cms }
+    let latestHeight = results.last { $0.unit == .meter }
+
+    XCTAssertNotNil(latestDischarge)
+    XCTAssertNotNil(latestHeight)
+
+    print(latestDischarge!)
+    print(latestHeight!)
+  }
+
+  func test_environment_canada_multiple() async throws {
+    let api = EnvironmentCanada()
+
+    let results = try await api.fetchGaugeStationData(for: ["07EA004", "07EA005"], province: .bc)
+
+    XCTAssertFalse(results.isEmpty)
+
+    let site1LatestDischarge = results.last { $0.siteID == "07EA004" && $0.unit == .cms }
+    let site1LatestHeight = results.last { $0.siteID == "07EA004" && $0.unit == .meter }
+
+    let site2LatestDischarge = results.last { $0.siteID == "07EA005" && $0.unit == .cms }
+    let site2LatestHeight = results.last { $0.siteID == "07EA005" && $0.unit == .meter }
+
+    XCTAssertNotNil(site1LatestDischarge)
+    XCTAssertNotNil(site1LatestHeight)
+
+    XCTAssertNotNil(site2LatestDischarge)
+    XCTAssertNotNil(site2LatestHeight)
+
+    print(site1LatestDischarge!)
+    print(site1LatestHeight!)
+
+    print(site2LatestDischarge!)
+    print(site2LatestHeight!)
+  }
+
 }
