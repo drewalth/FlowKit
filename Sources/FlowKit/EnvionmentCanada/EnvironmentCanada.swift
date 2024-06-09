@@ -19,9 +19,11 @@ public protocol EnvironmentCanadaAPIProtocol {
     province: EnvironmentCanada.Province) async throws -> [FKReading]
 }
 
-// MARK: - EnvironmentCanada
+public typealias EnvironmentCanada = FKEnvironmentCanada
 
-public struct EnvironmentCanada: EnvironmentCanadaAPIProtocol {
+// MARK: - FKEnvironmentCanada
+
+public struct FKEnvironmentCanada: EnvironmentCanadaAPIProtocol {
 
   // MARK: Lifecycle
 
@@ -190,7 +192,7 @@ public struct EnvironmentCanada: EnvironmentCanadaAPIProtocol {
   }
 }
 
-// MARK: EnvironmentCanada.CSVManager
+// MARK: - EnvironmentCanada.CSVManager
 
 extension EnvironmentCanada {
   private struct CSVManager {

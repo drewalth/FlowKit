@@ -22,11 +22,13 @@ public protocol WaterServicesAPI {
     parameters: [USGS.WaterServices.ReadingParameter]) async throws -> [FKReading]
 }
 
-// MARK: - USGS
+// MARK: - FKUnitedStatesGeologicalSurvey
 
-public struct USGS {
+public struct FKUnitedStatesGeologicalSurvey {
   public init() { }
 }
+
+public typealias USGS = FKUnitedStatesGeologicalSurvey
 
 // MARK: USGS.WaterServices
 
