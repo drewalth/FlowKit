@@ -30,7 +30,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up Swift
-      uses: actions/setup-swift@v2
+      uses: swift-actions/setup-swift@v2
       with:
         swift-version: '5.9'  # Specify the Swift version you want to use
 
