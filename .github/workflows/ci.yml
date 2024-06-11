@@ -65,9 +65,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: ${{ matrix.name }}
         run: |-
-          set -o pipefail
-          brew install FlowKit/FlowKit/firewalk || brew upgrade FlowKit/FlowKit/firewalk
-          firewalk &
           env NSUnbufferedIO=YES xcodebuild -project "FlowKit.xcodeproj" -scheme "FlowKit macOS" -destination "platform=macOS" -testPlan "${{ matrix.testPlan }}" clean test | ${{ matrix.outputFilter }}
   Catalyst:
     name: ${{ matrix.name }}
@@ -93,8 +90,6 @@ jobs:
             runsOn: macOS-13
     steps:
       - uses: actions/checkout@v4
-      - name: Install Firewalk
-        run: brew install FlowKit/FlowKit/firewalk || brew upgrade FlowKit/FlowKit/firewalk && firewalk &
       - name: Catalyst
         run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -project "FlowKit.xcodeproj" -scheme "FlowKit iOS" -destination "platform=macOS" clean test 2>&1 | xcbeautify --renderer github-actions
   iOS:
@@ -129,8 +124,6 @@ jobs:
             runsOn: firebreak
     steps:
       - uses: actions/checkout@v4
-      - name: Install Firewalk
-        run: brew install FlowKit/FlowKit/firewalk || brew upgrade FlowKit/FlowKit/firewalk && firewalk &
       - name: ${{ matrix.name }}
         run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -project "FlowKit.xcodeproj" -scheme "FlowKit iOS" -destination "${{ matrix.destination }}" -testPlan "${{ matrix.testPlan }}" clean test 2>&1 | xcbeautify --renderer github-actions
   tvOS:
@@ -165,8 +158,6 @@ jobs:
             runsOn: firebreak
     steps:
       - uses: actions/checkout@v4
-      - name: Install Firewalk
-        run: brew install FlowKit/FlowKit/firewalk || brew upgrade FlowKit/FlowKit/firewalk && firewalk &
       - name: ${{ matrix.name }}
         run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -project "FlowKit.xcodeproj" -scheme "FlowKit tvOS" -destination "${{ matrix.destination }}" -testPlan "${{ matrix.testPlan }}" clean test 2>&1 | xcbeautify --renderer github-actions
   visionOS:
@@ -186,8 +177,6 @@ jobs:
             runsOn: firebreak
     steps:
       - uses: actions/checkout@v4
-      - name: Install Firewalk
-        run: brew install FlowKit/FlowKit/firewalk || brew upgrade FlowKit/FlowKit/firewalk && firewalk &
       - name: ${{ matrix.name }}
         run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -project "FlowKit.xcodeproj" -scheme "${{ matrix.scheme }}" -destination "${{ matrix.destination }}" -testPlan "${{ matrix.testPlan }}" clean test 2>&1 | xcbeautify --renderer github-actions
   watchOS:
@@ -222,8 +211,6 @@ jobs:
             runsOn: firebreak
     steps:
       - uses: actions/checkout@v4
-      - name: Install Firewalk
-        run: brew update && brew install FlowKit/FlowKit/firewalk || brew upgrade FlowKit/FlowKit/firewalk && firewalk &
       - name: ${{ matrix.name }}
         run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild -project "FlowKit.xcodeproj" -scheme "FlowKit watchOS" -destination "${{ matrix.destination }}" -testPlan "${{ matrix.testPlan }}" clean test 2>&1 | xcbeautify --renderer github-actions
   SPM:
@@ -262,8 +249,6 @@ jobs:
             outputFilter: xcpretty
     steps:
       - uses: actions/checkout@v4
-      - name: Install Firewalk
-        run: brew install FlowKit/FlowKit/firewalk || brew upgrade FlowKit/FlowKit/firewalk xcbeautify && firewalk &
       - name: Test SPM
         run: swift test -c debug 2>&1 | ${{ matrix.outputFilter }}
   Linux:
