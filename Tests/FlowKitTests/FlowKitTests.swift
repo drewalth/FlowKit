@@ -6,9 +6,7 @@ final class FlowKitTests: XCTestCase {
 
   // run test then visit https://waterdata.usgs.gov/monitoring-location/09359500/#parameterCode=00060&period=P7D&showMedian=false to see the source data
   func test_usgs_single() async throws {
-    let api = USGS.WaterServices()
-
-    let results = try await api.fetchGaugeStationData(
+    let results = try await USGS.waterServices.fetchGaugeStationData(
       siteID: "09359500",
       timePeriod: .predefined(.sevenDays),
       parameters: [.height, .discharge])
@@ -24,9 +22,7 @@ final class FlowKitTests: XCTestCase {
   }
 
   func test_usgs_multiple() async throws {
-    let api = USGS.WaterServices()
-
-    let results = try await api.fetchGaugeStationData(
+    let results = try await USGS.waterServices.fetchGaugeStationData(
       for: ["09359500", "01646500"],
       timePeriod: .predefined(.sevenDays),
       parameters: [.height, .discharge])
