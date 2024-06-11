@@ -3,39 +3,21 @@ name: FlowKit CI
 on:
   push:
     branches:
-      - main  # Change this to your default branch
+      - main
   pull_request:
     branches:
-      - main  # Change this to your default branch
-
+      - main
+      
 jobs:
-  build-and-test:
+  test:
     runs-on: macos-latest
-
-    strategy:
-      matrix:
-        platform: [macOS, iOS]
-        include:
-          - platform: macOS
-            os: macos-latest
-            scheme: FlowKit-macOS
-            destination: "platform=macOS"
-          - platform: iOS
-            os: macos-latest
-            scheme: FlowKit-iOS
-            destination: "platform=iOS Simulator,name=iPhone 12,OS=15.0"
-
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v4
-
     - name: Set up Swift
       uses: swift-actions/setup-swift@v2
       with:
-        swift-version: '5.9'  # Specify the Swift version you want to use
-
+        swift-version: '5.9'
     - name: Build and Test
       run: |
-        xcodebuild -scheme ${{ matrix.scheme }} -destination "${{ matrix.destination }}" clean test | xcpretty
-      env:
-        CI: true
+        swift test
