@@ -26,6 +26,7 @@ public protocol WaterServicesAPI {
 
 public struct FKUnitedStatesGeologicalSurvey {
   public init() { }
+  public static let waterServices = WaterServices()
 }
 
 public typealias USGS = FKUnitedStatesGeologicalSurvey
@@ -169,6 +170,7 @@ extension USGS {
       }
 
       let (data, _) = try await URLSession.shared.data(from: url)
+
       let decoder = JSONDecoder()
       let response = try decoder.decode(JSONResponse.self, from: data)
 

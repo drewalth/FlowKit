@@ -1,6 +1,6 @@
 ![FlowKit](/flowkit-logo.jpg)
 
-FlowKit is a Swift package that aggregates river flow data from various sources into a unified API.
+FlowKit is a Swift package that aggregates river flow data from various sources into one easy-to-use API.
 
 ## Sources
 
