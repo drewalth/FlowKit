@@ -91,4 +91,19 @@ final class FlowKitTests: XCTestCase {
     print(site2LatestHeight!)
   }
 
+  func test_dwr_single() async throws {
+    let dwr = DWR()
+
+    let siteIDs = ["5800777A", "0200616A"]
+
+
+
+
+    for siteID in siteIDs {
+      let results = try await dwr.fetchData(siteID)
+
+      XCTAssertFalse(results.isEmpty)
+    }
+  }
+
 }
