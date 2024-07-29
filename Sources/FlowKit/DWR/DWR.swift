@@ -13,7 +13,19 @@ import Foundation
 
 // siteId: 0200616A
 
-public struct DWR {
+
+public typealias DWR = ColoradoDepartmentWaterResources
+
+// MARK: - ColoradoDepartmentWaterResources
+
+public struct ColoradoDepartmentWaterResources {
+
+  // MARK: Lifecycle
+
+
+  public init() { }
+
+  // MARK: Public
 
   public enum Errors: Error {
     case invalidURL
